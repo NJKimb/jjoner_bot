@@ -1,50 +1,33 @@
+mod commands;
+
 use std::env;
-use std::fs::File;
-use std::io::Read;
+use poise::serenity_prelude as serenity;
 
-use serenity::async_trait;
-use serenity::prelude::*;
-use serenity::model::channel::Message;
-use serenity::framework::standard::macros::{command, group};
-use serenity::framework::standard::{StandardFramework, CommandResult};
-use serenity::utils::Content;
+struct Data {}
+type Error = Box<dyn std::error::Error + Send + Sync>;
+type Context<'a> = poise::Context<'a, Data, Error>;
 
-#[group]
-#[commands(ping)]
-struct General;
-
-struct Handler;
-
-#[async_trait]
-impl EventHandler for Handler{}
+#[poise::command(slash_command, prefix_command)]
+async fn ping(ctx: Context<'_>, #[description = "Who do you want to ping?"] user: Option<serenity::User>) -> Result<(), Error> {
+    let response = format!("<@{}>", user.as_ref().unwrap().id.0);
+    ctx.say(response).await?;
+    Ok(())
+}
 
 #[tokio::main]
 async fn main() {
-    let framework = StandardFramework::new()
-        .configure(|c| c.prefix("~"))
-        .group(&GENERAL_GROUP);
-
-    let token = get_token();
-    let intents = GatewayIntents::non_privileged() | GatewayIntents::MESSAGE_CONTENT;
-    let mut client = Client::builder(token, intents).event_handler(Handler)
-        .framework(framework)
-        .await.expect("Error creating client");
-
-    if let Err(why) = client.start().await {
-        println!("An error occoured while running client: {:?}", why);
-    }
-}
-
-fn get_token() -> String{
-    let mut file = File::open("./token.txt").unwrap();
-    let mut token = String::new();
-    file.read_to_string(&mut token).expect("Failed to read from file");
-    return token;
-}
-
-#[command]
-async fn ping(ctx: &Context, msg: &Message) -> CommandResult{
-    msg.reply(ctx, "Pong!").await?;
-
-    Ok(())
+    let framework = poise::Framework::builder()
+        .options(poise::FrameworkOptions{
+            commands: vec![ping()],
+            ..Default::default()
+        })
+        .token(std::env::var("DISCORD_TOKEN").expect("Missing token"))
+        .intents(serenity::GatewayIntents::non_privileged())
+        .setup(|ctx, _ready, framework|{
+        Box::pin(async move {
+            poise::builtins::register_globally(ctx, &framework.options().commands).await?;
+            Ok(Data{})
+        })
+    });
+    framework.run().await.unwrap();
 }
