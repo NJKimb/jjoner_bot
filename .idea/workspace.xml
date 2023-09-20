@@ -7,14 +7,9 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="df745616-6398-4471-9af5-76c8aefacc92" name="Changes" comment="Renamed README.txt to README.md">
-      <change afterPath="$PROJECT_DIR$/src/commands/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commands/ping.rs" afterDir="false" />
+    <list default="true" id="df745616-6398-4471-9af5-76c8aefacc92" name="Changes" comment="Changed API from Serenity to Poise, added command to ping a user">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +68,7 @@
       <option name="buildTarget" value="REMOTE" />
       <option name="backtrace" value="SHORT" />
       <envs>
-        <env name="DISCORD_TOKEN" value="OTAyMjk1Njc1ODA1NDk5NTAy.G_ZYZS.DoqZWU-kekzJjckxqJUEpfLcgFfL7MYtn9SQB8" />
+        <env name="DISCORD_TOKEN" value="OTAyMjk1Njc1ODA1NDk5NTAy.GssSyf.3L5BMw3twRUdlobz-dAQmJoiv0miw-c583wPpM" />
       </envs>
       <option name="isRedirectInput" value="false" />
       <option name="redirectInputPath" value="" />
@@ -101,7 +96,7 @@
       <workItem from="1695184460524" duration="77000" />
       <workItem from="1695184548700" duration="1577000" />
       <workItem from="1695186192134" duration="1393000" />
-      <workItem from="1695187603033" duration="3430000" />
+      <workItem from="1695187603033" duration="3728000" />
     </task>
     <task id="LOCAL-00001" summary="Created simple bot">
       <option name="closed" value="true" />
@@ -127,7 +122,15 @@
       <option name="project" value="LOCAL" />
       <updated>1695191336829</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Changed API from Serenity to Poise, added command to ping a user">
+      <option name="closed" value="true" />
+      <created>1695191166430</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1695191166430</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -137,7 +140,8 @@
     <MESSAGE value="Created simple bot" />
     <MESSAGE value="Added README and Cargo.lock" />
     <MESSAGE value="Renamed README.txt to README.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="Renamed README.txt to README.md" />
+    <MESSAGE value="Changed API from Serenity to Poise, added command to ping a user" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed API from Serenity to Poise, added command to ping a user" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
