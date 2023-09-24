@@ -3,9 +3,9 @@ use poise::serenity_prelude as serenity;
 use crate::{Context, Error};
 use crate::serenity::CommandType::Message;
 
-///Say the amount of messages sent in the server for the given user
+///Count the amount of messages sent in the channel for a given user
 #[poise::command(slash_command)]
-pub async fn message_count(ctx: Context<'_>, #[description = "User you would like to get the message count of?"] user: serenity::User
+pub async fn message_count(ctx: Context<'_>, #[description = "User to get message count of"] user: serenity::User
     ,#[description = "Channel to get messages from"] channel: serenity::model::channel::Channel) -> Result<(), Error> {
     let mut message_count = 0;
     let mut channel_iter = channel.id().messages_iter(&ctx).boxed();
