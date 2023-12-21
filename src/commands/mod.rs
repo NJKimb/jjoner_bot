@@ -1,4 +1,3 @@
 pub mod ping;
-pub mod message_count;
-pub mod quotes;
-mod coin_flip;
+
+pub(crate) mod coin_flip;

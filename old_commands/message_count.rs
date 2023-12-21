@@ -4,7 +4,7 @@ use crate::{Context, Error};
 use crate::serenity::CommandType::Message;
 
 ///Count the amount of messages sent in the channel for a given user
-#[poise::command(slash_command)]
+#[poise::command(slash_command, prefix_command)]
 pub async fn message_count(ctx: Context<'_>, #[description = "User to get message count of"] user: serenity::User
     ,#[description = "Channel to get messages from"] channel: serenity::model::channel::Channel) -> Result<(), Error> {
     let mut message_count = 0;
