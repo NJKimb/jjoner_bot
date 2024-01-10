@@ -16,7 +16,7 @@ pub async fn roll(ctx: Context<'_>, #[description = "Choose a number of sides (d
         "d6"=> rolled_num = (num % 5) + 1,
         "d8"=> rolled_num = (num % 7) + 1,
         "d24"=> rolled_num = (num % 23) + 1,
-        _ => { ctx.say("Not a valid die!").await?; valid = false;}
+        _ => { ctx.say(format!("{sides} is not a valid die size!")).await?; valid = false;}
     }
 
     if valid == true {

@@ -1,26 +1,30 @@
 use crate::{Context, Error, UserInformation};
 use std::clone::Clone;
+use std::ops::{DerefMut};
 
 ///Dig in the ground for treasure
 #[poise::command(slash_command, prefix_command)]
 pub async fn dig(ctx: Context<'_>) -> Result<(), Error> {
     let points_added: u32 = rand::random::<u32>() % 250;
     {
-        let mut users_vec = ctx.data().users.lock().unwrap();
+        let mut users_vec_mutex = ctx.data().users.lock().unwrap();
+        let users_vec = users_vec_mutex.deref_mut();
         let sender_uid = ctx.author().id;
-        let mut sender = UserInformation { points: 0, user_id: sender_uid };
-        let mut index: usize = 0;
+        let mut exists = false;
 
-        for info in users_vec.clone().into_iter() {
+        for info in &mut *users_vec {
             if info.user_id == sender_uid {
-                sender = info;
-                users_vec.remove(index); // I'd like a better way to do this but this works for now
-                index += 1;
+                info.points += points_added;
+                exists = true;
             }
         }
-
-        sender.points += points_added;
-        users_vec.push(sender);
+        if exists == false {
+            let user = UserInformation {
+                points: points_added,
+                user_id: sender_uid
+            };
+            users_vec.push(user);
+        }
     }
 
     let response = format!("Added {points_added} points!");
