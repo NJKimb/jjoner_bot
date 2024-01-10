@@ -1,12 +1,21 @@
 mod commands;
 
-use std::collections::HashMap;
 use std::sync::Mutex;
 use poise::serenity_prelude as serenity;
+use poise::serenity_prelude::UserId;
 
-pub struct Data {}
 type Error = Box<dyn std::error::Error + Send + Sync>;
 type Context<'a> = poise::Context<'a, Data, Error>;
+
+#[derive(Clone)]
+struct UserInformation {
+    points: u32,
+    user_id: UserId
+}
+
+pub struct Data {
+    users: Mutex<Vec<UserInformation>>,
+}
 
 #[tokio::main]
 async fn main() {
@@ -16,6 +25,9 @@ async fn main() {
             commands: vec![
                 commands::ping::ping(),
                 commands::coin_flip::flip(),
+                commands::points::dig(),
+                commands::points::points(),
+                commands::points::get_user_count()
             ],
 
             prefix_options: poise::PrefixFrameworkOptions {
@@ -35,7 +47,9 @@ async fn main() {
         .setup(|ctx, _ready, framework|{
             Box::pin(async move {
                 poise::builtins::register_globally(ctx, &framework.options().commands).await?;
-                Ok(Data{})
+                Ok(Data{
+                    users: Mutex::new(Vec::new())
+                })
         })
     });
     framework.run().await.unwrap();

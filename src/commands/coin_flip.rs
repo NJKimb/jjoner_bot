@@ -1,16 +1,15 @@
-use poise::serenity_prelude as serenity;
 use crate::{Context, Error};
-use rand::{random, Rng};
+use rand::{random};
 
 ///Flip a coin!
 #[poise::command(slash_command, prefix_command)]
 pub async fn flip(ctx: Context<'_>) -> Result<(), Error> {
-    let mut response = "";
+    let response;
     let random_number: bool = random::<bool>();
-    if (random_number == true){
+    if random_number == true {
         response = "Heads";
     }
-    else if (random_number == false){
+    else if random_number == false {
         response = "Tails";
     }
     else {
