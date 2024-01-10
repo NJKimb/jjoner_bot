@@ -6,14 +6,10 @@ use rand::{random};
 pub async fn flip(ctx: Context<'_>) -> Result<(), Error> {
     let response;
     let random_number: bool = random::<bool>();
-    if random_number == true {
-        response = "Heads";
-    }
-    else if random_number == false {
-        response = "Tails";
-    }
-    else {
-       response = "Error";
+
+    match random_number {
+        true => response = "Heads",
+        false => response = "Tails",
     }
     ctx.say(response).await?;
     Ok(())

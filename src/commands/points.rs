@@ -46,6 +46,7 @@ pub async fn points(ctx: Context<'_>) -> Result<(), Error> {
     Ok(())
 }
 
+///Get the amount of users
 #[poise::command(slash_command, prefix_command)]
 pub async fn get_user_count(ctx: Context<'_>) -> Result<(), Error> {
     let response;

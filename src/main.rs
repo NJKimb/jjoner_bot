@@ -27,7 +27,8 @@ async fn main() {
                 commands::coin_flip::flip(),
                 commands::points::dig(),
                 commands::points::points(),
-                commands::points::get_user_count()
+                commands::points::get_user_count(),
+                commands::dice::roll()
             ],
 
             prefix_options: poise::PrefixFrameworkOptions {
