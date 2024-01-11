@@ -1,31 +1,14 @@
 use crate::{Context, Error, UserInformation};
 use std::clone::Clone;
-use std::ops::{DerefMut};
+use std::ops::{Deref, DerefMut};
 
 ///Dig in the ground for treasure
 #[poise::command(slash_command, prefix_command)]
 pub async fn dig(ctx: Context<'_>) -> Result<(), Error> {
     let points_added: u32 = rand::random::<u32>() % 250;
-    {
-        let mut users_vec_mutex = ctx.data().users.lock().unwrap();
-        let users_vec = users_vec_mutex.deref_mut();
-        let sender_uid = ctx.author().id;
-        let mut exists = false;
+    let mut user: Vec<UserInformation> = get_or_create_user(ctx).to_owned();
 
-        for info in &mut *users_vec {
-            if info.user_id == sender_uid {
-                info.points += points_added;
-                exists = true;
-            }
-        }
-        if exists == false {
-            let user = UserInformation {
-                points: points_added,
-                user_id: sender_uid
-            };
-            users_vec.push(user);
-        }
-    }
+     user[0].points += points_added;
 
     let response = format!("Added {points_added} points!");
     ctx.say(response).await?;
@@ -64,4 +47,23 @@ pub async fn get_user_count(ctx: Context<'_>) -> Result<(), Error> {
     response = format!("There are {user_count} users!");
     ctx.say(response).await?;
     Ok(())
+}
+
+fn get_or_create_user(ctx: Context<'_>) -> &[UserInformation] {
+    let mut users_vec_mutex = ctx.data().users.lock().unwrap();
+    let users_vec = users_vec_mutex.deref_mut();
+    let sender_uid = ctx.author().id;
+
+    for info in &mut *users_vec {
+        if info.user_id == sender_uid {
+            return std::slice::from_ref(info);
+        }
+    }
+
+    let user = UserInformation {
+        points: 0,
+        user_id: sender_uid
+    };
+    users_vec.push(user);
+    return std::slice::from_ref(&user);
 }
