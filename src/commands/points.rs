@@ -1,6 +1,7 @@
 use crate::{Context, Error, UserInformation};
 use std::clone::Clone;
 use std::ops::{DerefMut};
+use crate::json::serialize_users;
 
 ///Dig in the ground for treasure
 #[poise::command(slash_command, prefix_command)]
@@ -29,6 +30,7 @@ pub async fn dig(ctx: Context<'_>) -> Result<(), Error> {
     }
 
     ctx.say(response).await?;
+    serialize_users(ctx).await?; // TODO: Change this to serialize at another point
 
     Ok(())
 }
