@@ -1,13 +1,15 @@
 mod commands;
+mod json;
 
 use std::sync::Mutex;
 use poise::serenity_prelude as serenity;
 use poise::serenity_prelude::UserId;
+use serde::{Deserialize, Serialize};
 
 type Error = Box<dyn std::error::Error + Send + Sync>;
 type Context<'a> = poise::Context<'a, Data, Error>;
 
-#[derive(Clone)]
+#[derive(Clone, Serialize, Deserialize)]
 struct UserInformation {
     points: u32,
     user_id: UserId
@@ -19,7 +21,6 @@ pub struct Data {
 
 #[tokio::main]
 async fn main() {
-
     let framework = poise::Framework::builder()
         .options(poise::FrameworkOptions{
             commands: vec![
@@ -29,21 +30,12 @@ async fn main() {
                 commands::points::points(),
                 commands::points::get_user_count(),
                 commands::points::create(),
-                commands::dice::roll()
+                commands::dice::roll(),
+                commands::utility::deserialize(),
+                commands::utility::serialize()
             ],
-
-            prefix_options: poise::PrefixFrameworkOptions {
-                prefix: Some("!".into()),
-                additional_prefixes: vec![
-                    poise::Prefix::Literal("hey bot"),
-                    poise::Prefix::Literal("hey bot,"),
-                ],
-                ..Default::default()
-            },
-
             ..Default::default()
         })
-
         .token(std::env::var("DISCORD_TOKEN").expect("Missing token"))
         .intents(serenity::GatewayIntents::non_privileged())
         .setup(|ctx, _ready, framework|{
@@ -54,5 +46,6 @@ async fn main() {
                 })
         })
     });
+
     framework.run().await.unwrap();
 }

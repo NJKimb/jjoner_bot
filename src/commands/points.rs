@@ -5,6 +5,7 @@ use std::ops::{DerefMut};
 ///Dig in the ground for treasure
 #[poise::command(slash_command, prefix_command)]
 pub async fn dig(ctx: Context<'_>) -> Result<(), Error> {
+
     let points_added: u32 = rand::random::<u32>() % 250;
     let mut exists = false;
     {
