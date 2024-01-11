@@ -28,6 +28,7 @@ async fn main() {
                 commands::points::dig(),
                 commands::points::points(),
                 commands::points::get_user_count(),
+                commands::points::create(),
                 commands::dice::roll()
             ],
 
