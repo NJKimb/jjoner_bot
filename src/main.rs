@@ -35,6 +35,7 @@ async fn main() {
                 commands::points::get_user_count(),
                 commands::points::create(),
                 commands::dice::roll(),
+                commands::points::high_low()
             ],
 
             ..Default::default()

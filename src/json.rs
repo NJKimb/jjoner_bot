@@ -9,7 +9,7 @@ pub async fn serialize_users(ctx: Context<'_>) -> Result<(), Error> {
 
     let json = serde_json::to_vec_pretty(users_vec).expect("Could not parse JSON!");
     let mut file = File::options().write(true).open("user_information.txt").expect("Could not open file!");
-    file.write(&*json).expect("TODO: panic message");
+    file.write(&*json).expect("Could not write JSON to file!");
 
     Ok(())
 }
